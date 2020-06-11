@@ -20,10 +20,14 @@ export default class Generated extends Command {
 
       /** run all plugins */
       for (const plugin of plugins) {
-        require(plugin).default({
+        const opt = {
           config: allPluginConfig || {},
           generatedDir: generatedrcConfig.generatedDir,
-        })
+        }
+        if (typeof plugin === 'string') {
+          return require(plugin).default(opt)
+        }
+        plugin(opt)
       }
     } catch (error) {
       console.log(error)

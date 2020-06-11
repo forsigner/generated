@@ -1,7 +1,7 @@
 export interface GeneratedrcConfig {
   configDir?: string
   generatedDir?: string
-  plugins?: string[]
+  plugins?: any[]
 }
 
 export interface PluginOptions {
