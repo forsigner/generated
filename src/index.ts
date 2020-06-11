@@ -4,7 +4,7 @@ import { loadConfig } from './load-gconfig'
 import { loadGeneratedrc } from './load-generatedrc'
 
 export default class Generated extends Command {
-  static description = 'describe the command here'
+  static description = 'Generate your code'
 
   static flags = {
     // add --version flag to show CLI version
@@ -22,7 +22,7 @@ export default class Generated extends Command {
       for (const plugin of plugins) {
         require(plugin).default({
           config: allPluginConfig || {},
-          generatedDir: generatedrcConfig.generatedDir || {},
+          generatedDir: generatedrcConfig.generatedDir,
         })
       }
     } catch (error) {
