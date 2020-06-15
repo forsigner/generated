@@ -25,7 +25,8 @@ export default class Generated extends Command {
           generatedDir: generatedrcConfig.generatedDir,
         }
         if (typeof plugin === 'string') {
-          return require(plugin).default(opt)
+          require(plugin).default(opt)
+          continue
         }
         plugin(opt)
       }
