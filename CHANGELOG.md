@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/forsigner/generated/compare/v0.0.2...v0.0.3) (2020-06-15)
+
+
+### Bug Fixes
+
+* fix plugin run ([8bd62ea](https://github.com/forsigner/generated/commit/8bd62ead91ccb936bf90bee26177b81e4f78274d))
+
 ### [0.0.2](https://github.com/forsigner/generated/compare/v0.0.1...v0.0.2) (2020-06-11)
 
 
