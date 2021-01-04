@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/forsigner/generated/compare/v0.0.3...v0.0.4) (2021-01-04)
+
+
+### Features
+
+* can run single plugin ([6d2c8b6](https://github.com/forsigner/generated/commit/6d2c8b619e6b12d9b0144707de40ce802ef3970c))
+
 ### [0.0.3](https://github.com/forsigner/generated/compare/v0.0.2...v0.0.3) (2020-06-15)
 
 
