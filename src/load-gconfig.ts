@@ -3,9 +3,9 @@ import { readdirSync, existsSync, readFileSync } from 'fs'
 import * as ts from 'typescript'
 const requireFromString = require('require-from-string')
 
-export function loadConfig() {
+export function loadConfig(configPath = 'gconfig') {
   const cwd = process.cwd()
-  const configDir = join(cwd, 'gconfig')
+  const configDir = join(cwd, configPath)
   if (!existsSync(configDir)) return
 
   const files = readdirSync(configDir)

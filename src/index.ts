@@ -1,5 +1,4 @@
 import { Command, flags } from '@oclif/command'
-import { join } from 'path'
 import { loadConfig } from './load-gconfig'
 import { loadGeneratedrc } from './load-generatedrc'
 
@@ -10,26 +9,39 @@ export default class Generated extends Command {
     // add --version flag to show CLI version
     version: flags.version({ char: 'v' }),
     help: flags.help({ char: 'h' }),
+    plugin: flags.string({ char: 'p' })
   }
 
   async run() {
     try {
-      const generatedrcConfig = loadGeneratedrc() // Generatedrc config
-      const allPluginConfig = loadConfig() // plugin config
-      const { plugins = [] } = generatedrcConfig
+      const { flags } = this.parse(Generated)
+      const cmdPluginName = flags.plugin  // run single plugin
+
+      const { configDir, plugins = [], generatedDir } = loadGeneratedrc() // Generatedrc config
+      const allPluginConfig = loadConfig(configDir) // plugin config
+
+      const opt = {
+        config: allPluginConfig || {},
+        generatedDir,
+      }
 
       /** run all plugins */
       for (const plugin of plugins) {
-        const opt = {
-          config: allPluginConfig || {},
-          generatedDir: generatedrcConfig.generatedDir,
-        }
-        if (typeof plugin === 'string') {
+
+        if(cmdPluginName) {
+          if (typeof plugin !== 'string') continue
+          if (plugin !== cmdPluginName) continue
           require(plugin).default(opt)
-          continue
+          break
+        } else {
+          if (typeof plugin === 'string') {
+            require(plugin).default(opt)
+            continue
+          }
+          plugin(opt)
         }
-        plugin(opt)
       }
+
     } catch (error) {
       console.log(error)
     }
