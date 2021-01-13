@@ -28,8 +28,8 @@ export default async (options = {} as PluginOptions) => {
     .filter((i) => i.actions?.includes('useQuery') || i.actions?.includes('useMutate'))
     .map((i) => i.alias || i.name) as string[]
 
-  const useQueryConfig = gql
-    .filter((i) => i.actions?.includes('useQuery'))
+  const mutatorConfig = gql
+    .filter((i) => i.actions?.includes('mutator'))
     .map((i) => i.alias || i.name) as string[]
 
   const queryConfig = gql
@@ -43,7 +43,7 @@ export default async (options = {} as PluginOptions) => {
   const promises = [
     generateGql(gql),
     generateHooks(httpModule, gqlConstantModule, hooksConfig, gql),
-    generateMutator(httpModule, gqlConstantModule, useQueryConfig, gql),
+    generateMutator(httpModule, gqlConstantModule, mutatorConfig, gql),
     generateApi(httpModule, gqlConstantModule, queryConfig, gql),
     generateRefetcher(httpModule, gqlConstantModule, refetchConfig, gql),
   ]

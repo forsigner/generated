@@ -34,7 +34,7 @@ export interface ServiceOptions {
 
 export type GqlConfig = ConfigItem[]
 
-type Action = 'query' | 'useQuery' | 'useMutate' | 'refetch'
+type Action = 'query' | 'useQuery' | 'useMutate' | 'refetch' | 'mutator'
 export interface ConfigItem {
   alias?: string // 生成的变量的名称，比如 SCRIPT
   name: string // graphql 端点名称

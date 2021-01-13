@@ -17,4 +17,6 @@
 /src/.umi
 /src/.umi-production
 /src/.umi-test
+/src/generated
 /.env.local
+

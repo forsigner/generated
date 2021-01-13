@@ -28,12 +28,12 @@ function getStatements(gqlName: string, objectType: string): string {
  *
  * @export
  * @param {string} gqlConstantModule
- * @param {string[]} useQueryConfig
+ * @param {string[]} mutatorConfig
  */
 export async function generateMutator(
   httpModule: string,
   gqlConstantModule: string,
-  useQueryConfig: string[],
+  mutatorConfig: string[] = [],
   gqlConfig: ConfigItem[],
 ) {
   const project = new Project()
@@ -47,10 +47,10 @@ export async function generateMutator(
   const gqlNames: string[] = [] // graphQL query name, 例如： USERS、USERS_CONECTION
 
   // 有效的 alias config
-  const aliasConfigs = gqlConfig.filter((i) => useQueryConfig.includes(i.alias || ''))
+  const aliasConfigs = gqlConfig.filter((i) => mutatorConfig.includes(i.alias || ''))
 
   // 把 alias 也转换成 name
-  const realNames = useQueryConfig.map((name) => {
+  const realNames = mutatorConfig.map((name) => {
     const find = gqlConfig.find((i) => i.alias === name)
     return find ? find.name : name
   })
@@ -69,10 +69,7 @@ export async function generateMutator(
     for (const field of objectType.fields) {
       const queryName = field.name.value
 
-      // 如果 refetchConfig 配置大于 0，就只使用 refetchConfig 配置里面的 queryName
-      if (useQueryConfig.length && !realNames.includes(queryName)) {
-        continue
-      }
+      if (!realNames.includes(queryName)) continue
 
       const matchingAliasConfigs = aliasConfigs.filter((i) => i.name === queryName)
 
@@ -93,12 +90,11 @@ export async function generateMutator(
         }
       }
 
-      const statements = getStatements(gqlName, objectType)
-
       // 生产别名的 Hooks
       for (const item of matchingAliasConfigs) {
         const gqlName = upper(item.alias || '', '_')
         gqlNames.push(gqlName)
+        const statements = getStatements(gqlName, objectType)
         methods.push({
           name: `mutate${pascal(item.alias || '')}`,
           returnType: 'void',
@@ -113,6 +109,8 @@ export async function generateMutator(
       }
 
       // 非别名的 refetcher
+
+      const statements = getStatements(gqlName, objectType)
       methods.push({
         name: `mutate${pascal(queryName)}`,
         returnType: 'void',
@@ -127,27 +125,31 @@ export async function generateMutator(
     }
   }
 
-  // import stook-graphql
-  sourceFile.addImportDeclaration({
-    moduleSpecifier: httpModule,
-    namedImports: ['Result'],
-  })
+  if (mutatorConfig.length) {
+    // import stook-graphql
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: httpModule,
+      namedImports: ['Result'],
+    })
 
-  // import stook
-  sourceFile.addImportDeclaration({
-    moduleSpecifier: 'stook',
-    namedImports: ['mutate'],
-  })
+    // import stook
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: 'stook',
+      namedImports: ['mutate'],
+    })
+  }
 
-  sourceFile.addImportDeclaration({
-    moduleSpecifier: gqlConstantModule,
-    namedImports: [...formatNamedImports(gqlNames)],
-  })
+  if (gqlNames.length) {
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: gqlConstantModule,
+      namedImports: [...formatNamedImports(gqlNames)],
+    })
 
-  sourceFile.addImportDeclaration({
-    moduleSpecifier: '@generated/types',
-    namedImports: [...formatNamedImports(objectTypes)],
-  })
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: '@generated/types',
+      namedImports: [...formatNamedImports(objectTypes)],
+    })
+  }
 
   sourceFile.addClass({
     name: 'MutatorService',
