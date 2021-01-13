@@ -56,9 +56,7 @@ export async function generateApi(
 
       let objectType = getObjectType(field)
 
-      if (apiConfig.length && !realNames.includes(queryName)) {
-        continue
-      }
+      if (!realNames.includes(queryName)) continue
 
       if (objectType) {
         // 过滤掉
@@ -108,21 +106,23 @@ export async function generateApi(
     }
   }
 
-  // import stook-graphql
-  sourceFile.addImportDeclaration({
-    moduleSpecifier: httpModule,
-    namedImports: ['Options', 'query'],
-  })
+  if (methods.length) {
+    // import stook-graphql
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: httpModule,
+      namedImports: ['Options', 'query'],
+    })
 
-  sourceFile.addImportDeclaration({
-    moduleSpecifier: '@generated/types',
-    namedImports: [...formatNamedImports(objectTypes, argTypes)],
-  })
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: '@generated/types',
+      namedImports: [...formatNamedImports(objectTypes, argTypes)],
+    })
 
-  sourceFile.addImportDeclaration({
-    moduleSpecifier: gqlConstantModule,
-    namedImports: [...formatNamedImports(gqlNames)],
-  })
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: gqlConstantModule,
+      namedImports: [...formatNamedImports(gqlNames)],
+    })
+  }
 
   sourceFile.addClass({
     name: 'ApiService',

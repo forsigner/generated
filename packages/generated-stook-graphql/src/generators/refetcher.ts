@@ -122,10 +122,7 @@ export async function generateRefetcher(
     for (const field of objectType.fields) {
       const queryName = field.name.value
 
-      // 如果 refetchConfig 配置大于 0，就只使用 refetchConfig 配置里面的 queryName
-      if (refetchConfig.length && !realNames.includes(queryName)) {
-        continue
-      }
+      if (!realNames.includes(queryName)) continue
 
       const matchingAliasConfigs = aliasConfigs.filter((i) => i.name === queryName)
 
@@ -201,21 +198,23 @@ export async function generateRefetcher(
     }
   }
 
-  // import stook-graphql
-  sourceFile.addImportDeclaration({
-    moduleSpecifier: httpModule,
-    namedImports: ['RefetchOptions', 'fetcher'],
-  })
+  if (methods.length) {
+    // import stook-graphql
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: httpModule,
+      namedImports: ['RefetchOptions', 'fetcher'],
+    })
 
-  sourceFile.addImportDeclaration({
-    moduleSpecifier: '@generated/types',
-    namedImports: [...formatNamedImports(objectTypes, argTypes)],
-  })
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: '@generated/types',
+      namedImports: [...formatNamedImports(objectTypes, argTypes)],
+    })
 
-  sourceFile.addImportDeclaration({
-    moduleSpecifier: gqlConstantModule,
-    namedImports: [...formatNamedImports(gqlNames)],
-  })
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: gqlConstantModule,
+      namedImports: [...formatNamedImports(gqlNames)],
+    })
+  }
 
   sourceFile.addClass({
     name: 'RefetcherService',

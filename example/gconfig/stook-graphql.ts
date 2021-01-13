@@ -19,7 +19,7 @@ export const stookGraphql: Config = {
   gql: [
     {
       name: 'User',
-      actions: ['query', 'useQuery', 'mutator'],
+      actions: ['query', 'useQuery', 'mutator', 'refetch'],
     },
 
     {

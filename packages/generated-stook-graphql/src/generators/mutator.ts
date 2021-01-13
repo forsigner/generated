@@ -125,7 +125,7 @@ export async function generateMutator(
     }
   }
 
-  if (mutatorConfig.length) {
+  if (methods.length) {
     // import stook-graphql
     sourceFile.addImportDeclaration({
       moduleSpecifier: httpModule,
@@ -137,9 +137,6 @@ export async function generateMutator(
       moduleSpecifier: 'stook',
       namedImports: ['mutate'],
     })
-  }
-
-  if (gqlNames.length) {
     sourceFile.addImportDeclaration({
       moduleSpecifier: gqlConstantModule,
       namedImports: [...formatNamedImports(gqlNames)],

@@ -125,10 +125,7 @@ export async function generateHooks(
     for (const field of objectType.fields) {
       const queryName = field.name.value // 节点名称
 
-      // 如果 hookConfig 配置大于 0，就只使用 hook 配置里面的 queryName
-      if (hooksConfig.length && !realNames.includes(queryName)) {
-        continue
-      }
+      if (!realNames.includes(queryName)) continue
 
       const gqlName = upper(queryName, '_')
       gqlNames.push(gqlName)
@@ -199,21 +196,23 @@ export async function generateHooks(
     }
   }
 
-  // import stook-graphql
-  sourceFile.addImportDeclaration({
-    moduleSpecifier: httpModule,
-    namedImports: ['Options', 'useQuery', 'useMutate'],
-  })
+  if (methods.length) {
+    // import stook-graphql
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: httpModule,
+      namedImports: ['Options', 'useQuery', 'useMutate'],
+    })
 
-  sourceFile.addImportDeclaration({
-    moduleSpecifier: '@generated/types',
-    namedImports: [...formatNamedImports(objectTypes, argTypes)],
-  })
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: '@generated/types',
+      namedImports: [...formatNamedImports(objectTypes, argTypes)],
+    })
 
-  sourceFile.addImportDeclaration({
-    moduleSpecifier: gqlConstantModule,
-    namedImports: [...formatNamedImports(gqlNames)],
-  })
+    sourceFile.addImportDeclaration({
+      moduleSpecifier: gqlConstantModule,
+      namedImports: [...formatNamedImports(gqlNames)],
+    })
+  }
 
   sourceFile.addClass({
     name: 'HooksService',
