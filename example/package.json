@@ -1,0 +1,23 @@
+{
+  "name": "example-generated",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "generated && umi dev",
+    "build": "umi build",
+    "postinstall": "umi generate tmp",
+    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
+    "test": "echo 'no test'",
+    "test:coverage": "echo 'no test'"
+  },
+  "dependencies": {
+    "@umijs/preset-react": "1.x",
+    "@umijs/test": "^3.3.2",
+    "generated": "^0.0.4",
+    "generated-stook-graphql": "^1.0.0",
+    "stook-devtools": "0.5.0",
+    "stook-graphql": "0.5.0",
+    "yup": "^0.32.6",
+    "umi": "^3.3.4"
+  }
+}

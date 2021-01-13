@@ -1,0 +1,59 @@
+{
+  "name": "generated",
+  "description": "A code generate tool",
+  "version": "0.0.4",
+  "author": "forsigner @forsigner",
+  "bin": {
+    "generated": "./bin/run"
+  },
+  "bugs": "https://github.com/forsigner/generated/issues",
+  "prettier": {
+    "semi": false,
+    "tabWidth": 2,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 100
+  },
+  "dependencies": {
+    "@oclif/command": "^1.6.1",
+    "@oclif/config": "^1.15.1",
+    "@oclif/plugin-help": "^3.1.0",
+    "require-from-string": "^2.0.2",
+    "tslib": "^1.13.0"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.22.2",
+    "@types/node": "^10.17.25",
+    "eslint": "^5.16.0",
+    "eslint-config-tie-app": "0.0.2",
+    "standard-version": "^8.0.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "homepage": "https://github.com/forsigner/generated",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "oclif": {
+    "bin": "generated"
+  },
+  "repository": "forsigner/generated",
+  "scripts": {
+    "posttest": "eslint . --ext .ts --config .eslintrc",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev readme",
+    "build": "rm -rf lib && tsc -b && oclif-dev readme",
+    "test": "echo NO TESTS",
+    "version": "oclif-dev readme && git add README.md",
+    "release": "standard-version"
+  },
+  "types": "lib/index.d.ts"
+}

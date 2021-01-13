@@ -1,58 +1,62 @@
 {
-  "name": "generated",
+  "name": "generated-root",
+  "private": true,
+  "version": "0.0.1",
   "description": "A code generate tool",
-  "version": "0.0.4",
-  "author": "forsigner @forsigner",
-  "bin": {
-    "generated": "./bin/run"
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "example"
+    ]
   },
-  "bugs": "https://github.com/forsigner/generated/issues",
-  "prettier": {
-    "semi": false,
-    "tabWidth": 2,
-    "singleQuote": true,
-    "trailingComma": "all",
-    "printWidth": 100
-  },
-  "dependencies": {
-    "@oclif/command": "^1.6.1",
-    "@oclif/config": "^1.15.1",
-    "@oclif/plugin-help": "^3.1.0",
-    "require-from-string": "^2.0.2",
-    "tslib": "^1.13.0"
-  },
-  "devDependencies": {
-    "@oclif/dev-cli": "^1.22.2",
-    "@types/node": "^10.17.25",
-    "eslint": "^5.16.0",
-    "eslint-config-tie-app": "0.0.2",
-    "standard-version": "^8.0.0",
-    "ts-node": "^8.10.2",
-    "typescript": "^3.9.5"
-  },
-  "engines": {
-    "node": ">=8.0.0"
-  },
-  "files": [
-    "/bin",
-    "/lib"
-  ],
-  "homepage": "https://github.com/forsigner/generated",
-  "keywords": [
-    "oclif"
-  ],
-  "license": "MIT",
-  "main": "lib/index.js",
-  "oclif": {
-    "bin": "generated"
-  },
-  "repository": "forsigner/generated",
   "scripts": {
-    "posttest": "eslint . --ext .ts --config .eslintrc",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev readme",
-    "test": "echo NO TESTS",
-    "version": "oclif-dev readme && git add README.md",
-    "release": "standard-version"
+    "dev": "lerna run --parallel --stream dev",
+    "build": "lerna run --parallel --stream build",
+    "test": "lerna run --parallel --stream test",
+    "publish": "lerna publish --force-publish=*"
   },
-  "types": "lib/index.d.ts"
+  "jest": {
+    "preset": "ts-jest",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/",
+      "/.history/"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/forsigner/generated.git"
+  },
+  "author": "@forsigner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/forsigner/generated/issues"
+  },
+  "homepage": "https://github.com/forsigner/generated#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@types/jest": "^26.0.20",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "coveralls": "^3.1.0",
+    "husky": "^4.3.7",
+    "jest": "^26.6.3",
+    "lerna": "^3.22.1",
+    "prettier": "^2.2.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "ts-jest": "26.4.4",
+    "typescript": "^4.1.3"
+  }
 }

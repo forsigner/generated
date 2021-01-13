@@ -1,0 +1,36 @@
+{
+  "name": "generated-antd-drawer",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build"
+  },
+  "peerDependencies": {},
+  "author": "forsigner",
+  "module": "dist/generated-antd-drawer.esm.js",
+  "devDependencies": {
+    "@types/lodash": "^4.14.167",
+    "generated": "0.0.4",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.1.0",
+    "typescript": "^4.1.3"
+  },
+  "dependencies": {
+    "case": "^1.6.3",
+    "lodash": "^4.17.20",
+    "ts-morph": "^9.1.0"
+  }
+}
