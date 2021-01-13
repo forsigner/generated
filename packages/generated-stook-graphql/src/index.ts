@@ -5,6 +5,7 @@ import { generateGql } from './generators/gql'
 import { generateHooks } from './generators/hooks'
 import { generateApi } from './generators/api'
 import { generateRefetcher } from './generators/refetcher'
+import { generateMutator } from './generators/mutator'
 
 export * from './types'
 
@@ -23,21 +24,28 @@ export default async (options = {} as PluginOptions) => {
     // defaultDepthLimit = 2,
   } = config
 
-  const hooks = gql
+  const hooksConfig = gql
     .filter((i) => i.actions?.includes('useQuery') || i.actions?.includes('useMutate'))
     .map((i) => i.alias || i.name) as string[]
 
-  const query = gql
+  const useQueryConfig = gql
+    .filter((i) => i.actions?.includes('useQuery'))
+    .map((i) => i.alias || i.name) as string[]
+
+  const queryConfig = gql
     .filter((item) => item.actions?.includes('query'))
     .map((item) => item.alias || item.name)
 
-  const refetch = gql.filter((i) => i.actions?.includes('refetch')).map((i) => i.alias || i.name)
+  const refetchConfig = gql
+    .filter((i) => i.actions?.includes('refetch'))
+    .map((i) => i.alias || i.name)
 
   const promises = [
     generateGql(gql),
-    generateHooks(httpModule, gqlConstantModule, hooks, gql),
-    generateApi(httpModule, gqlConstantModule, query, gql),
-    generateRefetcher(httpModule, gqlConstantModule, refetch, gql),
+    generateHooks(httpModule, gqlConstantModule, hooksConfig, gql),
+    generateMutator(httpModule, gqlConstantModule, useQueryConfig, gql),
+    generateApi(httpModule, gqlConstantModule, queryConfig, gql),
+    generateRefetcher(httpModule, gqlConstantModule, refetchConfig, gql),
   ]
 
   await Promise.all(promises)

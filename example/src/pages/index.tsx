@@ -1,33 +1,23 @@
-import React from 'react';
-import gql from 'gql-tag'; // editor helpe
-import { query } from '@peajs/graphql-client';
+import { Hooks } from '@/generated/hooks'
+import { Mutator } from '@/generated/mutator'
+import React from 'react'
 
-export default class App extends React.Component {
-  state = {
-    data: '...',
-  };
-  async componentDidMount() {
-    const USERS = gql`
-      query User {
-        User(id: 1) {
-          id
-          name
-        }
-      }
-    `;
-
-    const endpoint = 'https://graphql.anilist.co';
-
-    const data = await query(endpoint, USERS, {});
-    this.setState({ data });
-  }
-
-  render() {
-    return (
-      <div>
-        <h2>gql</h2>
-        <pre className="App">{JSON.stringify(this.state.data, null, 2)}</pre>
-      </div>
-    );
-  }
+export default () => {
+  const { data } = Hooks.useUser({ id: 1 })
+  return (
+    <div>
+      <h2>gql</h2>
+      <button
+        onClick={() => {
+          Mutator.mutateUser((user) => {
+            user.id = 100
+            user.name = 'foo'
+          })
+        }}
+      >
+        Update user
+      </button>
+      <pre className="App">{JSON.stringify(data, null, 2)}</pre>
+    </div>
+  )
 }

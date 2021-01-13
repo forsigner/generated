@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "g": "generated",
     "start": "generated && umi dev",
     "build": "umi build",
     "postinstall": "umi generate tmp",
@@ -17,6 +18,7 @@
     "generated-stook-graphql": "^1.0.0",
     "stook-devtools": "0.5.0",
     "stook-graphql": "0.5.0",
+    "stook": "0.5.0",
     "yup": "^0.32.6",
     "umi": "^3.3.4"
   }
