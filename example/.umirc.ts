@@ -15,6 +15,22 @@ export default defineConfig({
       path: '/users/:id',
       component: '@/pages/user',
     },
+    {
+      path: '/spaces/:spaceId',
+      component: '@/layouts/DashboardLayout',
+      routes: [
+        {
+          path: ':tableId',
+          component: '@/layouts/TableLayout',
+          routes: [
+            {
+              path: ':viewId',
+              component: '@/pages/table',
+            },
+          ],
+        },
+      ],
+    },
   ],
 
   alias: {

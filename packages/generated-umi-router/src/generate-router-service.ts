@@ -47,7 +47,7 @@ export function generateRouterlService(generatedDir: string, routesConfig: Route
 
       if (!routes?.length) return [...result, flatItem]
 
-      const currentParent = `${parent}${item.path}` // 追加父级path
+      const currentParent = parent ? `${parent}/${item.path}` : item.path // 追加父级path
       const childrenData = flatConfig(routes, currentParent)
       return [...result, flatItem, ...childrenData]
     }, [])
