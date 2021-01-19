@@ -14,8 +14,9 @@
   "dependencies": {
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.3.2",
-    "generated": "^0.0.4",
-    "generated-stook-graphql": "^1.0.0",
+    "generated": "^1.1.1",
+    "generated-stook-graphql": "^1.1.1",
+    "generated-umi-router": "^1.1.1",
     "stook-devtools": "0.5.0",
     "stook-graphql": "0.5.0",
     "stook": "0.5.0",
