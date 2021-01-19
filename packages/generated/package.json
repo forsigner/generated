@@ -1,7 +1,7 @@
 {
   "name": "generated",
   "description": "A code generate tool",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "forsigner @forsigner",
   "bin": {
     "generated": "./bin/run"
