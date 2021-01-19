@@ -1,12 +1,13 @@
 import { Hooks } from '@/generated/hooks'
 import { Mutator } from '@/generated/mutator'
+import { routerService } from '@/generated/routerService'
 import React from 'react'
 
 export default () => {
   const { data } = Hooks.useUser({ id: 1 })
   return (
     <div>
-      <h2>gql</h2>
+      <h2 onClick={() => routerService.toUser({ id: 10 })}>gql</h2>
       <button
         onClick={() => {
           Mutator.mutateUser((user) => {
