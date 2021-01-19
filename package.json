@@ -10,9 +10,9 @@
     ]
   },
   "scripts": {
-    "dev": "lerna run --parallel --stream dev",
-    "build": "lerna run --parallel --stream build",
-    "test": "lerna run --parallel --stream test",
+    "dev": "lerna run --stream dev",
+    "build": "lerna run --stream build",
+    "test": "lerna run --stream test",
     "publish": "lerna publish --force-publish=*"
   },
   "jest": {
