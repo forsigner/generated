@@ -26,7 +26,7 @@ function getStatements(field: FieldDefinitionNode, gqlName: string): string {
   // 无参数
   if (!args.length) {
     statements = `
-      const key = ${gqlName}
+      const key = opt.key ? opt.key : ${gqlName}
       if (!fetcher.get(key))  {
         return console.warn('fetcher找不到' + key) as any
       }
@@ -37,7 +37,7 @@ function getStatements(field: FieldDefinitionNode, gqlName: string): string {
     // 只有个参数并且叫 input
   } else if (args.length === 1 && firstArgName === 'input') {
     statements = `
-      const key = ${gqlName}
+      const key = opt.key ? opt.key : ${gqlName}
       if (!fetcher.get(key))  {
         return console.warn('fetcher找不到' + key) as any
       }
@@ -48,7 +48,7 @@ function getStatements(field: FieldDefinitionNode, gqlName: string): string {
     // 多参数,或者不叫 input
   } else {
     statements = `
-      const key = ${gqlName}
+      const key = opt.key ? opt.key : ${gqlName}
       if (!fetcher.get(key))  {
         return console.warn('fetcher找不到' + key) as any
       }
