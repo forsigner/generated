@@ -6,6 +6,7 @@ import { generateHooks } from './generators/hooks'
 import { generateApi } from './generators/api'
 import { generateRefetcher } from './generators/refetcher'
 import { generateMutator } from './generators/mutator'
+import { generateNames } from './generators/names'
 
 export * from './types'
 
@@ -42,6 +43,7 @@ export default async (options = {} as PluginOptions) => {
 
   const promises = [
     generateGql(gql),
+    generateNames(),
     generateHooks(httpModule, gqlConstantModule, hooksConfig, gql),
     generateMutator(httpModule, gqlConstantModule, mutatorConfig, gql),
     generateApi(httpModule, gqlConstantModule, queryConfig, gql),

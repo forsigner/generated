@@ -1,4 +1,5 @@
 import { Config } from 'generated-stook-graphql'
+import { Names } from '../src/generated/gql-names'
 
 export const stookGraphql: Config = {
   codegen: {
@@ -16,9 +17,10 @@ export const stookGraphql: Config = {
       },
     },
   },
+
   gql: [
     {
-      name: 'User',
+      name: Names.Article,
       actions: ['query', 'useQuery', 'mutator', 'refetch'],
     },
 
