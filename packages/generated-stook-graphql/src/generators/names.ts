@@ -1,9 +1,8 @@
 import { EnumMemberStructure, OptionalKind, Project } from 'ts-morph'
-
 import get from 'lodash.get'
 import { join } from 'path'
 import { readFileSync } from 'fs'
-import { parse } from 'graphql'
+import { ObjectTypeDefinitionNode, parse } from 'graphql'
 import saveSourceFile from '../utils/saveSourceFile'
 
 type Operation = 'Query' | 'Mutation'
@@ -19,10 +18,14 @@ export async function generateNames() {
   const members: OptionalKind<EnumMemberStructure>[] = []
   for (const def of sdl.definitions) {
     const operation: Operation = get(def, 'name.value')
-    if (def.kind === 'ObjectTypeDefinition') {
-      members.push({
-        name: operation,
-        value: operation,
+    const objectType = def as ObjectTypeDefinitionNode
+
+    if (operation === 'Query' || operation === 'Mutation') {
+      objectType.fields?.forEach((field) => {
+        members.push({
+          name: field.name.value,
+          value: field.name.value,
+        })
       })
     }
   }

@@ -6,6 +6,7 @@ export const stookGraphql: Config = {
     schema: [
       {
         'https://graphql.anilist.co': {},
+        // 'http://localhost:5001/graphql': {},
       },
     ],
     generates: {
@@ -20,14 +21,8 @@ export const stookGraphql: Config = {
 
   gql: [
     {
-      name: Names.Article,
+      name: 'Usre',
       actions: ['query', 'useQuery', 'mutator', 'refetch'],
-    },
-
-    {
-      alias: 'MyUser',
-      name: 'User',
-      actions: ['mutator'],
     },
   ],
 }
