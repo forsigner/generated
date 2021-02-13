@@ -1,12 +1,12 @@
 import { Config } from 'generated-stook-graphql'
-import { Names } from '../src/generated/gql-names'
+// import { Names } from '../src/generated/gql-names'
 
 export const stookGraphql: Config = {
   codegen: {
     schema: [
       {
-        // 'https://graphql.anilist.co': {},
-        'http://localhost:5001/graphql': {},
+        'https://graphql.anilist.co': {},
+        // 'http://localhost:5001/graphql': {},
       },
     ],
     generates: {
@@ -20,24 +20,24 @@ export const stookGraphql: Config = {
   },
 
   gql: [
-    // {
-    //   name: 'User',
-    //   actions: ['query', 'useQuery', 'mutator', 'refetch'],
-    // },
-
-    // {
-    //   alias: 'MyUser',
-    //   name: 'User',
-    //   actions: ['mutator'],
-    // },
     {
-      name: Names.tables,
+      name: 'User',
       actions: ['query', 'useQuery', 'mutator', 'refetch'],
     },
 
     {
-      name: Names.addColumn,
+      alias: 'MyUser',
+      name: 'User',
       actions: ['mutator'],
     },
+    // {
+    //   name: 'tables',
+    //   actions: ['query', 'useQuery', 'mutator', 'refetch'],
+    // },
+
+    // {
+    //   name: 'addColumn',
+    //   actions: ['mutator'],
+    // },
   ],
 }

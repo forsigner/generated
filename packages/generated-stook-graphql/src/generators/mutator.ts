@@ -17,8 +17,11 @@ import { getObjectType } from '../utils/getObjectType'
 
 type Operation = 'Query' | 'Mutation'
 
-function getStatements(gqlName: string): string {
-  return `mutate(${gqlName}, fn)`
+function getStatements(gqlName: string, objectType: string): string {
+  return `mutate(${gqlName}, (state: Result<${objectType}>)  => {
+  fn(state.data)
+})
+`
 }
 
 /**
@@ -92,30 +95,29 @@ export async function generateMutator(
       for (const item of matchingAliasConfigs) {
         const gqlName = upper(item.alias || '', '_')
         gqlNames.push(gqlName)
-        const statements = getStatements(gqlName)
+        const statements = getStatements(gqlName, objectType)
         methods.push({
           name: `mutate${pascal(item.alias || '')}`,
           returnType: 'void',
           parameters: [
             {
               name: 'fn',
-              type: `(state: Result<${objectType}>) => void`,
+              type: `(state: ${objectType}) => void`,
             },
           ],
           statements,
         })
       }
 
-      // 非别名的 refetcher
-
-      const statements = getStatements(gqlName)
+      // 非别名的 mutator
+      const statements = getStatements(gqlName, objectType)
       methods.push({
         name: `mutate${pascal(queryName)}`,
         returnType: 'void',
         parameters: [
           {
             name: 'fn',
-            type: `(state: Result<${objectType}>) => void`,
+            type: `(state: ${objectType}) => void`,
           },
         ],
         statements,
