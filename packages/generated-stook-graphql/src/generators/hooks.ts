@@ -130,7 +130,7 @@ export async function generateHooks(
       const gqlName = upper(queryName, '_')
       gqlNames.push(gqlName)
 
-      const action = operation === 'Query' ? 'useQuery' : 'useMutate'
+      const action = operation === 'Query' ? 'useQuery' : 'useMutation'
 
       const argsType = getArgsType(field, operation, gqlName)
       const variableType = getVariableType(field, operation, gqlName)
@@ -200,7 +200,7 @@ export async function generateHooks(
     // import stook-graphql
     sourceFile.addImportDeclaration({
       moduleSpecifier: httpModule,
-      namedImports: ['Options', 'useQuery', 'useMutate'],
+      namedImports: ['Options', 'useQuery', 'useMutation'],
     })
 
     sourceFile.addImportDeclaration({

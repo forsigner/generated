@@ -26,7 +26,7 @@ export default async (options = {} as PluginOptions) => {
   } = config
 
   const hooksConfig = gql
-    .filter((i) => i.actions?.includes('useQuery') || i.actions?.includes('useMutate'))
+    .filter((i) => i.actions?.includes('useQuery') || i.actions?.includes('useMutation'))
     .map((i) => i.alias || i.name) as string[]
 
   const mutatorConfig = gql

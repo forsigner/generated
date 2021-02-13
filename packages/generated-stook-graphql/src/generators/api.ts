@@ -46,6 +46,7 @@ export async function generateApi(
 
     // 只处理跟节点 Query、Mutation
     if (!['Query', 'Mutation'].includes(operation)) continue
+
     if (!objectType.fields || !objectType.fields.length) continue
 
     for (const field of objectType.fields) {

@@ -126,7 +126,7 @@ export async function generateRefetcher(
 
       const matchingAliasConfigs = aliasConfigs.filter((i) => i.name === queryName)
 
-      // const action = operation === 'Query' ? 'useQuery' : 'useMutate'
+      // const action = operation === 'Query' ? 'useQuery' : 'useMutation'
 
       const gqlName = upper(queryName, '_')
       gqlNames.push(gqlName)

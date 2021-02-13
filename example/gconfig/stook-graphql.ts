@@ -5,8 +5,8 @@ export const stookGraphql: Config = {
   codegen: {
     schema: [
       {
-        'https://graphql.anilist.co': {},
-        // 'http://localhost:5001/graphql': {},
+        // 'https://graphql.anilist.co': {},
+        'http://localhost:5001/graphql': {},
       },
     ],
     generates: {
@@ -20,9 +20,24 @@ export const stookGraphql: Config = {
   },
 
   gql: [
+    // {
+    //   name: 'User',
+    //   actions: ['query', 'useQuery', 'mutator', 'refetch'],
+    // },
+
+    // {
+    //   alias: 'MyUser',
+    //   name: 'User',
+    //   actions: ['mutator'],
+    // },
     {
-      name: 'Usre',
+      name: Names.tables,
       actions: ['query', 'useQuery', 'mutator', 'refetch'],
+    },
+
+    {
+      name: Names.addColumn,
+      actions: ['mutator'],
     },
   ],
 }
